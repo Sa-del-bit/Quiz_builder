@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: quizbuilder-mysql
+    environment:
+      MYSQL_DATABASE: quiz
+      MYSQL_ROOT_PASSWORD: Charan_@2005
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: quizbuilder-backend
+    ports:
+      - "9096:9096"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/quiz
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Charan_@2005
+    depends_on:
+      - mysql
+    restart: unless-stopped
+
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: quizbuilder-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_BACKEND_URL: http://localhost:9096
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  mysql_data:

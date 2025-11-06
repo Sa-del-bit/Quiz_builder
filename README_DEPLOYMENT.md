@@ -6,19 +6,33 @@ This repository contains all the necessary files and instructions to deploy the 
 
 ```
 QuizBuilder/
-├── backend/                 # Spring Boot backend application
-├── frontend/                # React frontend application
-├── k8s/                     # Kubernetes manifests
-├── ansible/                 # Ansible playbooks
-├── DEPLOYMENT_GUIDE.md      # Comprehensive deployment guide
-├── deploy.sh                # Linux/Mac deployment script
-├── deploy.bat               # Windows deployment script
-└── README_DEPLOYMENT.md     # This file
+├── backend/                    # Spring Boot backend application
+├── frontend/                   # React frontend application
+├── k8s/                        # Kubernetes manifests
+├── ansible/                    # Ansible playbooks
+├── DEPLOYMENT_GUIDE.md         # Comprehensive deployment guide
+├── README.md                   # Main project README
+├── README_DEPLOYMENT.md        # This file
+├── docker-compose.yml          # Docker Compose for local development
+├── deploy.sh                   # Linux/Mac Kubernetes deployment script
+├── deploy.bat                  # Windows Kubernetes deployment script
+├── check-prerequisites.sh      # Linux/Mac prerequisites checker
+└── check-prerequisites.bat     # Windows prerequisites checker
 ```
 
 ## Deployment Options
 
-### Option 1: Using Ansible (Recommended)
+### Option 1: Using Docker Compose (Easiest for Local Development)
+
+```bash
+docker-compose up --build
+```
+
+Access the application:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:9096
+
+### Option 2: Using Ansible (Recommended for Kubernetes)
 
 1. Ensure you have Ansible installed:
    ```bash
@@ -32,17 +46,32 @@ QuizBuilder/
    ansible-playbook playbook.yaml
    ```
 
-### Option 2: Using Shell Script (Linux/Mac)
+### Option 3: Using Shell Script (Linux/Mac)
 
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### Option 3: Using Batch Script (Windows)
+### Option 4: Using Batch Script (Windows)
 
 ```cmd
 deploy.bat
+```
+
+## Prerequisites Check
+
+You can verify if all prerequisites are installed:
+
+### Linux/Mac:
+```bash
+chmod +x check-prerequisites.sh
+./check-prerequisites.sh
+```
+
+### Windows:
+```cmd
+check-prerequisites.bat
 ```
 
 ## Architecture
